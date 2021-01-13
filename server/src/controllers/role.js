@@ -50,7 +50,8 @@ class Role extends BasicService {
 
   async listAll() {
     this.checkMethod('GET')
-    const options = {}
+    const appId = this.getRequiredArg('appID')
+    const options = {appID: appId}
     const roles = await RoleModel.findAll(options)
     roles.forEach((role, i) => {
       roles[i] = util.filterFieldWhite(role.toJSON(), roleFields)
