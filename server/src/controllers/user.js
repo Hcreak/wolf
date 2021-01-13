@@ -158,12 +158,14 @@ class User extends BasicService {
   async listAll() {
     this.checkMethod('GET')
     const options = {}
-    const users = await UserModel.findAll(options)
-    users.forEach((user, i) => {
-      users[i] = util.filterFieldWhite(user.toJSON(), userFields)
+    const userInfos = await UserModel.findAll(options)
+    userInfos.forEach((userInfo, i) => {
+      userInfo = util.filterFieldWhite(userInfo.toJSON(), userFields)
+      userInfo.appIDs = userInfo.appIDs || []
+      userInfos[i] = userInfo;
     });
-    const total = users.length;
-    const data = {users, total}
+    const total = userInfos.length;
+    const data = {userInfos, total}
     this.success(data)
   }
 
