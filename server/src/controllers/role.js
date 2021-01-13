@@ -48,6 +48,18 @@ class Role extends BasicService {
     this.success(data)
   }
 
+  async listAll() {
+    this.checkMethod('GET')
+    const options = {}
+    const roles = await RoleModel.findAll(options)
+    roles.forEach((role, i) => {
+      roles[i] = util.filterFieldWhite(role.toJSON(), roleFields)
+    });
+    const total = roles.length;
+    const data = {roles, total}
+    this.success(data)
+  }
+
   async post() {
     const fieldsMap = {
       appID: {type: 'string', required: true},

@@ -43,6 +43,18 @@ class Permission extends BasicService {
     this.success(data)
   }
 
+  async listAll() {
+    this.checkMethod('GET')
+    const options = {}
+    const permissions = await PermissionModel.findAll(options)
+    permissions.forEach((permission, i) => {
+      permissions[i] = util.filterFieldWhite(permission.toJSON(), permissionFields)
+    });
+    const total = permissions.length;
+    const data = {permissions, total}
+    this.success(data)
+  }
+
   async post() {
     const fieldsMap = {
       appID: {type: 'string', required: true},
