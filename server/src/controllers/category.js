@@ -43,7 +43,8 @@ class Category extends BasicService {
   async listAll() {
     this.checkMethod('GET')
     const appId = this.getRequiredArg('appID')
-    const options = {appID: appId}
+    const where = {appID: appId}
+    const options = {where}
     const categorys = await CategoryModel.findAll(options)
     categorys.forEach((category, i) => {
       categorys[i] = util.filterFieldWhite(category.toJSON(), categoryFields)

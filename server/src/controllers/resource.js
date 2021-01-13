@@ -67,7 +67,8 @@ class Resource extends BasicService {
   async listAll() {
     this.checkMethod('GET')
     const appId = this.getRequiredArg('appID')
-    const options = {appID: appId}
+    const where = {appID: appId}
+    const options = {where}
     const resources = await ResourceModel.findAll(options)
     resources.forEach((resource, i) => {
       resources[i] = util.filterFieldWhite(resource.toJSON(), resourceFields)

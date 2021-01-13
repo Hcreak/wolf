@@ -46,7 +46,8 @@ class Permission extends BasicService {
   async listAll() {
     this.checkMethod('GET')
     const appId = this.getRequiredArg('appID')
-    const options = {appID: appId}
+    const where = {appID: appId}
+    const options = {where}
     const permissions = await PermissionModel.findAll(options)
     permissions.forEach((permission, i) => {
       permissions[i] = util.filterFieldWhite(permission.toJSON(), permissionFields)
