@@ -152,7 +152,7 @@ export default {
         ],
         name: [
           { required: true, message: 'Please input role name', trigger: ['blur', 'change'] },
-          { min: 2, max: 32, message: 'length must be between 2 and 32 characters', trigger: ['blur', 'change'] },
+          // { min: 2, max: 32, message: 'length must be between 2 and 32 characters', trigger: ['blur', 'change'] },
           { validator: this.validateRoleName, trigger: ['blur', 'change'] },
         ],
       },
