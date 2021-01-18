@@ -16,6 +16,7 @@
   - [AccessLog](#API-AccessLog)
   - [RBAC API For Wolf-Agent](#API-RBAC)
   - [OAuth2](./admin-api-oauth2.0-cn.md)
+  - [SubUser](#API-SubUser)
 
 
 ## Protocol
@@ -2841,6 +2842,67 @@ curl http://127.0.0.1:10080/wolf/rbac/access_check \
       "permissions": {},
       "roles": {}
     }
+  }
+}
+```
+
+
+## API-SubUser
+
+### 子用户下所有权限查询
+
+查询指定应用指定用户下的所有角色下的所有权限 并按照权限列表格式输出
+
+#### 请求方法: GET
+#### 请求URL: /wolf/subuser/permissions
+#### `Header` 参数: 需要 [`Console`登录](#Login)的token, 通过 `x-rbac-token` 请求头传递.
+#### `Query`参数
+
+字段 | 类型 | 必填项 |说明
+-------|-------|------|-----
+appID | string | 是 | 应用ID
+username | string | 是 | 用户名称,不是用户ID!
+
+#### `Response Body` 响应
+
+* data:
+
+字段 | 类型 | 必填项 |说明
+-------|-------|------|-----
+permissions | [Permission](#Permission)[] | 是 | 权限列表.
+total | integer | 是 | 总记录数
+
+#### 示例
+
+* 请求
+
+```json
+curl http://127.0.0.1:10080/wolf/subuser/permissions?appID=restful&username=test-user \
+-H "x-rbac-token: $WOLF_TOKEN"
+```
+
+* 响应
+
+```json
+
+  "ok": true,
+  "reason": "",
+  "data": {
+    "permissions": [
+      {
+        "id": "test-permission",
+        "appID": "restful",
+        "name": "permission for test2",
+        "description": "description of permission2",
+        "categoryID": 2,
+        "createTime": 1588658062,
+        "updateTime": 1588658246,
+        "category_id": 2,
+        "category": null
+      },
+      ...
+    ],
+    "total": 2
   }
 }
 ```
