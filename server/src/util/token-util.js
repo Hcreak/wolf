@@ -14,9 +14,9 @@ function tokenEncrypt(userInfo, appid) {
   if (appid) {
     payload.appid = appid
   }
-  if (userInfo.mainuserid) {
-    payload.mainuserid = userInfo.mainuserid
-  }
+  // if (userInfo.mainuserid) {
+  //   payload.mainuserid = userInfo.mainuserid
+  // }
   const token = jwt.sign(payload, tokenKey, { expiresIn })
   return { token, expiresIn }
 }
