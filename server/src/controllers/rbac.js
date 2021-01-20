@@ -124,7 +124,7 @@ class Rbac extends RbacPub {
 
     if (userInfo.nickname.indexOf('@') != -1) {
       let mainUserName = userInfo.nickname.split('@')[1]
-      let mainUserInfo = await UserModel.findOne({where: {username: mainUserName}})
+      let mainUserInfo = await UserModel.findOne({where: {nickname: mainUserName}})
       userInfo.setDataValue('mainuserid', mainUserInfo.username)
     }
 
