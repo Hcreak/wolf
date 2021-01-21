@@ -122,6 +122,12 @@ class Rbac extends RbacPub {
 
     userCache.flushUserCacheByID(userInfo.id, appid)
 
+    if (userInfo.nickname.indexOf('@') != -1) {
+      let mainUserName = userInfo.nickname.split('@')[1]
+      let mainUserInfo = await UserModel.findOne({where: {nickname: mainUserName}})
+      userInfo.setDataValue('mainuserid', mainUserInfo.username)
+    }
+
     userInfo = userInfo.toJSON()
     const { token, expiresIn } = await this.tokenCreate(userInfo, appid)
     return {ok: true, token, expiresIn, userInfo}
@@ -133,8 +139,8 @@ class Rbac extends RbacPub {
       this.fail(200, reason, {})
       return
     }
-    const {id, username, nickname} = userInfo;
-    const data = {userInfo: {id, username, nickname}, token}
+    const {id, username, nickname, mainuserid} = userInfo;
+    const data = {userInfo: {id, username, nickname, mainuserid}, token}
     this.success(data)
   }
 

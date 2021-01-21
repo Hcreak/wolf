@@ -68,6 +68,13 @@ class RbacPub extends BasicService {
     }
     this.log4js.info('getResource({appID: %s, action: %s, resName: %s}) res: %s, cached: %s', appID, action, resName, resource, cached)
     const data = {userInfo: util.filterFieldWhite(userInfo, userFields)}
+    
+    if (userInfo.nickname.indexOf('@') != -1) {
+      let mainUserName = userInfo.nickname.split('@')[1]
+      let mainUserInfo = await UserModel.findOne({where: {nickname: mainUserName}})
+      data.userInfo.mainuserid = mainUserInfo.username
+    }
+
     if (resource) {
       this.ctx.resource = resource;
       const permID = resource.permID;
