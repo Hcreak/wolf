@@ -96,9 +96,9 @@ class Role extends BasicService {
 
     await this.checkAppIDsExist([appID])
     await RoleModel.checkExist({ appID, id }, errors.ERR_ROLE_ID_NOT_FOUND)
-    if (values.name) {
-      await RoleModel.checkNotExist({'id': {[Op.ne]: id}, name: values.name}, errors.ERR_ROLE_NAME_EXIST)
-    }
+    // if (values.name) {
+    //   await RoleModel.checkNotExist({'id': {[Op.ne]: id}, name: values.name}, errors.ERR_ROLE_NAME_EXIST)
+    // }
     await this.checkPermIDsExist(appID, values.permIDs)
 
     values.updateTime = util.unixtime();
